@@ -5,7 +5,7 @@ from flask import Flask, request, redirect
 
 app = Flask(__name__)
 
-
+#
 DB_CONFIG = {
     'dbname': os.getenv('POSTGRES_DB', 'phonebook'),
     'user': os.getenv('POSTGRES_USER', 'sladkiy'),
