@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dev Phonebook</title>
+    <style>
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            background-color: #1e1e2e; 
+            color: #cdd6f4; 
+            max-width: 600px; 
+            margin: 3rem auto; 
+            padding: 1rem; 
+        }
+        h2 { color: #89b4fa; text-align: center; margin-bottom: 2rem; }
+        
+        /* Стили для формы добавления */
+        .add-form { 
+            display: flex; 
+            gap: 10px; 
+            margin-bottom: 2rem; 
+            background: #313244; 
+            padding: 1.5rem; 
+            border-radius: 10px; 
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+        }
+        .add-form input { 
+            flex: 1; 
+            padding: 12px; 
+            border: none; 
+            border-radius: 6px; 
+            background: #45475a; 
+            color: #cdd6f4; 
+            outline: none;
+        }
+        .add-form input:focus { box-shadow: 0 0 0 2px #89b4fa; }
+        .add-btn { 
+            padding: 12px 24px; 
+            border: none; 
+            border-radius: 6px; 
+            background: #89b4fa; 
+            color: #1e1e2e; 
+            font-weight: bold; 
+            cursor: pointer; 
+            transition: 0.2s;
+        }
+        .add-btn:hover { background: #b4befe; }
+
+        /* Стили для списка контактов */
+        .contact-card { 
+            background: #313244; 
+            margin-bottom: 12px; 
+            padding: 15px 20px; 
+            border-radius: 8px; 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center;
+            border-left: 4px solid #89b4fa;
+        }
+        .contact-info { display: flex; flex-direction: column; gap: 5px; }
+        .name { font-weight: bold; font-size: 1.1rem; }
+        .phone { color: #a6adc8; font-family: monospace; font-size: 1.1rem;}
+        
+        /* Кнопка удаления */
+        .delete-form { margin: 0; padding: 0; }
+        .delete-btn {
+            background: #f38ba8;
+            color: #11111b;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .delete-btn:hover { background: #eba0ac; }
+        
+        .empty-state { text-align: center; color: #a6adc8; margin-top: 2rem;}
+    </style>
+</head>
+<body>
+
+    <h2>Телефонная книга</h2>
+
+    <form class="add-form" method="POST" action="/">
+        <input type="text" name="name" placeholder="Имя контакта" required autocomplete="off">
+        <input type="tel" name="phone" placeholder="Телефон (только цифры)" required pattern="[0-9]+" title="Пожалуйста, введите только цифры" autocomplete="off">
+        <button class="add-btn" type="submit">Добавить</button>
+    </form>
+
+    <div class="contacts-list">
+        {% for contact in contacts %}
+            <div class="contact-card">
+                <div class="contact-info">
+                    <span class="name">{{ contact[1] }}</span>
+                    <span class="phone">{{ contact[2] }}</span>
+                </div>
+                <form class="delete-form" action="/delete/{{ contact[0] }}" method="POST">
+                    <button type="submit" class="delete-btn">Удалить</button>
+                </form>
+            </div>
+        {% else %}
+            <div class="empty-state">Книга пока пуста. Добавьте первый контакт!</div>
+        {% endfor %}
+    </div>
+
+</body>
+</html>
